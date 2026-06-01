@@ -16,9 +16,8 @@ app.use(session({
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
 
-app.get('/', (req, res) => {
-  res.json({ message: 'P-IRIS API ready' });
-});
+app.use(express.static(__dirname + '/../../FRONTEND'));
+// Routes will be added here as they are developed
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
