@@ -3,14 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>P-IRIS</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>P-IRIS - Cursos de Iris Gólvez</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="container py-5">
-    <h1>P-IRIS</h1>
-    <p>Plataforma de cursos - Estructura base</p>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <nav class="navbar-iris">
+    <div class="container">
+      <a href="/" class="logo">P-IRIS</a>
+      <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/">Cursos</a>
+        <a href="/">Contacto</a>
+        <a href="/">Iniciar Sesión</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Cursos y Talleres de Iris Gólvez</h1>
+    <p>Psicóloga - Master en Ética, Liderazgo y Trabajo en Equipo</p>
+  </header>
+
+  <main class="main-content">
+    <section class="section-title">
+      <h2>Cursos Disponibles</h2>
+    </section>
+
+    <section id="cursos-container" class="cursos-grid"></section>
+
+    <div id="pagination" class="pagination"></div>
+  </main>
+
+  <footer class="footer-iris">
+    <p>&copy; 2026 P-IRIS - Plataforma de Cursos. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/skeleton.js"></script>
+  <script src="js/catalog.js"></script>
 </body>
 </html>

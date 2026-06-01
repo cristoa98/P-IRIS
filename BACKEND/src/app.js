@@ -17,7 +17,9 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname + '/../../FRONTEND'));
-// Routes will be added here as they are developed
+
+const cursosRoutes = require('./routes/cursos.routes');
+app.use('/api/cursos', cursosRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
