@@ -21,6 +21,9 @@ app.use(express.static(__dirname + '/../../FRONTEND'));
 const cursosRoutes = require('./routes/cursos.routes');
 app.use('/api/cursos', cursosRoutes);
 
+const categoriasRoutes = require('./routes/categorias.routes');
+app.use('/api/categorias', categoriasRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`P-IRIS Backend running on http://localhost:${PORT}`);

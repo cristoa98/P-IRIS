@@ -29,6 +29,24 @@
       <h2>Cursos Disponibles</h2>
     </section>
 
+    <div class="filtros-container">
+      <div class="filtros-single-row">
+        <input type="text" id="busqueda-input" placeholder="Buscar cursos...">
+        <select id="categoria-select">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="ordenar-select">
+          <option value="relevancia">Ordenar por</option>
+          <option value="fecha">Más recientes</option>
+          <option value="precio_asc">Precio: menor a mayor</option>
+          <option value="precio_desc">Precio: mayor a menor</option>
+        </select>
+        <input type="number" id="precio-min" placeholder="Mín $" min="0">
+        <input type="number" id="precio-max" placeholder="Máx $" min="0">
+        <button id="limpiar-filtros" class="btn-secondary btn-sm">Limpiar</button>
+      </div>
+    </div>
+
     <section id="cursos-container" class="cursos-grid"></section>
 
     <div id="pagination" class="pagination"></div>
@@ -37,6 +55,24 @@
   <footer class="footer-iris">
     <p>&copy; 2026 P-IRIS - Plataforma de Cursos. Todos los derechos reservados.</p>
   </footer>
+
+  <div id="modal-curso" class="modal" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <img id="modal-imagen" src="" alt="">
+      <span id="modal-categoria" class="modal-badge"></span>
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-descripcion" class="modal-desc"></p>
+      <div class="modal-meta">
+        <span id="modal-duracion" class="modal-duracion"></span>
+      </div>
+      <div class="modal-footer">
+        <span id="modal-precio" class="badge-precio"></span>
+        <button class="btn-primary" id="modal-agregar">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/api.js"></script>
