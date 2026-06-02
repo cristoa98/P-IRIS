@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P-IRIS - Administración de Cursos</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <nav class="navbar-iris">
+    <div class="container">
+      <a href="/" class="logo">P-IRIS</a>
+      <div class="nav-links">
+        <a href="/">Ver Catálogo</a>
+        <a href="/admin.html" class="nav-active">Administración</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <h1>Gestión de Cursos</h1>
+      <button class="btn-primary" id="btn-nuevo-curso">+ Nuevo Curso</button>
+    </div>
+
+    <div id="admin-alert" class="admin-alert" style="display: none;"></div>
+
+    <div class="admin-toolbar">
+      <input type="text" id="admin-busqueda" placeholder="Buscar por nombre...">
+      <select id="admin-categoria">
+        <option value="">Todas las categorías</option>
+      </select>
+      <select id="admin-estado">
+        <option value="">Todos los estados</option>
+        <option value="1">Activos</option>
+        <option value="0">Inactivos</option>
+      </select>
+      <select id="admin-ordenar">
+        <option value="id_desc">Más recientes</option>
+        <option value="precio_asc">Precio: menor a mayor</option>
+        <option value="precio_desc">Precio: mayor a menor</option>
+      </select>
+    </div>
+
+    <div class="admin-table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cursos-tbody">
+          <tr><td colspan="5" class="table-loading">Cargando cursos...</td></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" id="tabla-total" class="tabla-total"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div id="admin-pagination" class="admin-pagination"></div>
+  </main>
+
+  <!-- Modal crear/editar -->
+  <div id="modal-form" class="modal" style="display: none;">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content admin-modal-content">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <h2 id="modal-form-titulo">Nuevo Curso</h2>
+
+      <form id="curso-form" novalidate>
+        <input type="hidden" id="form-id">
+
+        <div class="form-group">
+          <label for="form-titulo">Nombre <span class="required">*</span></label>
+          <input type="text" id="form-titulo" placeholder="Nombre del curso" maxlength="200">
+          <span class="field-error" id="err-titulo"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="form-descripcion">Descripción <span class="required">*</span></label>
+          <textarea id="form-descripcion" rows="4" placeholder="Descripción detallada del curso" maxlength="2000"></textarea>
+          <span class="field-error" id="err-descripcion"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-precio">Precio <span class="required">*</span></label>
+            <input type="number" id="form-precio" placeholder="0" min="0" step="100">
+            <span class="field-error" id="err-precio"></span>
+          </div>
+          <div class="form-group">
+            <label for="form-duracion">Duración</label>
+            <input type="text" id="form-duracion" placeholder="Ej: 6 semanas">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-video-url">Enlace del curso <span class="required">*</span></label>
+          <input type="text" id="form-video-url" placeholder="https://...">
+          <span class="field-error" id="err-video-url"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="form-imagen-url">URL de imagen</label>
+          <input type="text" id="form-imagen-url" placeholder="https://... (opcional)">
+        </div>
+
+        <div class="form-group">
+          <label for="form-categoria">Categoría</label>
+          <select id="form-categoria">
+            <option value="">Sin categoría</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn-primary" id="btn-guardar">Guardar curso</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal confirmación genérico -->
+  <div id="modal-confirm" class="modal" style="display: none;">
+    <div class="modal-backdrop" id="confirm-backdrop"></div>
+    <div class="modal-content confirm-modal-content">
+      <h2 id="confirm-titulo"></h2>
+      <p id="confirm-mensaje"></p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="confirm-cancelar">Cancelar</button>
+        <button class="btn-danger" id="confirm-aceptar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
