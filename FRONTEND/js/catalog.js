@@ -180,6 +180,14 @@ async function abrirModal(cursoId) {
     document.getElementById('modal-descripcion').textContent = curso.descripcion;
     document.getElementById('modal-precio').textContent = formatPrecio(curso.precio);
     document.getElementById('modal-duracion').textContent = curso.duracion || '';
+
+    const addBtn = document.getElementById('modal-agregar');
+    addBtn.dataset.cursoId = curso.id;
+    addBtn.dataset.cursoPrecio = curso.precio;
+    addBtn.dataset.cursoTitulo = curso.titulo;
+    const alreadyInCart = getCart().find(c => c.id === curso.id);
+    addBtn.textContent = alreadyInCart ? '✓ En el carrito' : 'Agregar al carrito';
+    addBtn.disabled = !!alreadyInCart;
   } catch (error) {
     console.error('Error al cargar detalle del curso:', error);
     cerrarModal();

@@ -1,0 +1,227 @@
+/* ── Botón carrito en navbar ── */
+.btn-carrito {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--iris-text);
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.btn-carrito:hover {
+  color: var(--iris-primary);
+}
+
+
+.carrito-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: var(--iris-error);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+/* ── Overlay ── */
+.carrito-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+/* ── Drawer ── */
+.carrito-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 95vw;
+  height: 100vh;
+  background: var(--iris-white);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.carrito-drawer.open {
+  transform: translateX(0);
+}
+
+/* ── Header del drawer ── */
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid var(--iris-gray);
+  background: var(--iris-primary);
+  color: var(--iris-white);
+}
+
+.carrito-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.carrito-close {
+  background: none;
+  border: none;
+  color: var(--iris-white);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.85;
+  transition: var(--transition);
+}
+
+.carrito-close:hover {
+  opacity: 1;
+}
+
+/* ── Lista de items ── */
+.carrito-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carrito-vacio {
+  text-align: center;
+  color: var(--iris-text-light);
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}
+
+.carrito-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--iris-light);
+  border-radius: var(--radius);
+  border: 1px solid var(--iris-gray);
+}
+
+.carrito-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.carrito-item-titulo {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--iris-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carrito-item-precio {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--iris-primary);
+}
+
+.carrito-item-remove {
+  background: none;
+  border: none;
+  color: var(--iris-gray-dark);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.carrito-item-remove:hover {
+  color: var(--iris-error);
+  background: #fdecea;
+}
+
+/* ── Resumen / totales ── */
+.carrito-resumen {
+  padding: 1.25rem 1.5rem;
+  border-top: 2px solid var(--iris-gray);
+  background: var(--iris-white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.carrito-resumen-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--iris-text);
+}
+
+.carrito-resumen-divider {
+  border-top: 1px solid var(--iris-gray);
+  margin: 0.25rem 0;
+}
+
+.carrito-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--iris-dark);
+}
+
+/* ── Footer con botón de pago ── */
+.carrito-footer {
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--iris-gray);
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--iris-primary);
+  color: var(--iris-white);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-checkout:hover {
+  background: var(--iris-primary-dark);
+}
+
+.btn-checkout:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.carrito-iva-nota {
+  font-size: 0.75rem;
+  color: var(--iris-text-light);
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
