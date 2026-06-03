@@ -10,12 +10,16 @@ function showLoginAlert(message, type = 'error') {
 
 async function redirectIfLoggedIn() {
     try {
-    const res = await api.get('/auth/me');
-    if (res.data.user?.rol === 'admin') {
+        const res = await api.get('/auth/me');
+        const user = res.data.user;
+
+        if (user.rol === 'admin') {
         window.location.href = '/admin.html';
-    }
+        } else {
+        window.location.href = '/historial.html';
+        }
     } catch (_) {
-    // Sin sesión activa: se mantiene en login.
+        // Sin sesión activa: se mantiene en login.
     }
 }
 
@@ -38,11 +42,10 @@ form.addEventListener('submit', async (e) => {
         const res = await api.post('/auth/login', { email, password });
         const user = res.data.user;
 
-        if (user.rol === 'admin') {
-        window.location.href = '/admin.html';
-        } else {
-        showLoginAlert('Acceso denegado. Tu usuario no tiene permisos de administrador.', 'error');
-        await api.post('/auth/logout').catch(() => {});
+    if (user.rol === 'admin') {
+        window.location.href = 'admin.html';
+    } else {
+        window.location.href = 'historial.html';
         }
     } catch (error) {
         const msg = error.response?.data?.message || 'No se pudo iniciar sesión.';

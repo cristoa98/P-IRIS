@@ -124,11 +124,15 @@ async function initDatabase() {
     db.run(`INSERT INTO roles (nombre, permisos) VALUES ('user', '["read"]')`);
   }
 
-  const usersCount = db.exec("SELECT COUNT(*) FROM usuarios")[0]?.values[0][0] || 0;
-  if (usersCount === 0) {
-    db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('admin@p-iris.cl', 'admin123', 'Administrador', 'P-IRIS', 1, 1)`);
-    db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('usuario@p-iris.cl', 'usuario123', 'Usuario', 'Demo', 2, 1)`);
-  }
+const adminExists = db.exec("SELECT COUNT(*) FROM usuarios WHERE email = 'admin@p-iris.cl'")[0]?.values[0][0] || 0;
+if (adminExists === 0) {
+  db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('admin@p-iris.cl', 'admin123', 'Administrador', 'P-IRIS', 1, 1)`);
+}
+
+const userExists = db.exec("SELECT COUNT(*) FROM usuarios WHERE email = 'usuario@p-iris.cl'")[0]?.values[0][0] || 0;
+if (userExists === 0) {
+  db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('usuario@p-iris.cl', 'usuario123', 'Usuario', 'Demo', 2, 1)`);
+}
 
   const catsCount = db.exec("SELECT COUNT(*) FROM categorias")[0]?.values[0][0] || 0;
   if (catsCount === 0) {

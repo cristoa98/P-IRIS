@@ -1,0 +1,47 @@
+document.addEventListener('DOMContentLoaded', cargarHistorial);
+
+async function cargarHistorial() {
+    const tbody = document.getElementById('historialBody');
+
+    try {
+        const response = await fetch('/api/compras/historial', {
+        credentials: 'include'
+        });
+
+        if (response.status === 401) {
+        window.location.href = 'login.html';
+        return;
+        }
+
+        const historial = await response.json();
+
+        if (!historial.length) {
+        tbody.innerHTML = `
+            <tr>
+            <td colspan="3">No tienes compras registradas.</td>
+            </tr>
+        `;
+        return;
+        }
+
+        tbody.innerHTML = historial.map((compra) => `
+        <tr>
+            <td>${compra.nombre_curso}</td>
+            <td>${formatearFecha(compra.fecha_compra)}</td>
+            <td>${compra.estado}</td>
+        </tr>
+        `).join('');
+
+    } catch (error) {
+        console.error('Error al cargar historial:', error);
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="3">No se pudo cargar el historial.</td>
+        </tr>
+        `;
+    }
+    }
+
+    function formatearFecha(fecha) {
+    return new Date(fecha).toLocaleDateString('es-CL');
+}

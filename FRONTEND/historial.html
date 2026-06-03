@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Compras - P-IRIS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/historial.css">
+    </head>
+    <body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+            <a href="index.html" class="nav-logo">P-IRIS</a>
+            <ul class="nav-menu">
+                <li><a href="catalog.html" class="nav-link">Ver Catálogo</a></li>
+                <li><a href="historial.html" class="nav-link active">Historial</a></li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="historial-container">
+        <div class="historial-header">
+            <h1>Historial de Compras</h1>
+            <p>Consulta los cursos que has comprado.</p>
+        </div>
+
+        <div class="historial-card">
+            <table class="historial-table">
+            <thead>
+                <tr>
+                <th>Curso</th>
+                <th>Fecha de compra</th>
+                <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="historialBody">
+                <tr>
+                <td colspan="3" class="historial-empty">Cargando historial...</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+</main>
+
+    <script src="js/historial.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+body {
+    background: #f7f5fb;
+}
+
+.historial-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.historial-header {
+    margin-bottom: 32px;
+}
+
+.historial-header h1 {
+    color: #6f5aa0;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.historial-header p {
+    color: #5f5f6b;
+    font-size: 16px;
+}
+
+.historial-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(31, 24, 54, 0.12);
+    overflow: hidden;
+}
+
+.historial-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.historial-table thead {
+    background: #6f5aa0;
+    color: #ffffff;
+}
+
+.historial-table th,
+.historial-table td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid #e6e1ef;
+}
+
+.historial-table th {
+    font-weight: 600;
+}
+
+.historial-table td {
+    color: #2d2d35;
+}
+
+.historial-status {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.historial-status.completada {
+    color: #2e7d12;
+    background: #e8f6df;
+}
+
+.historial-status.pendiente {
+    color: #8a5a00;
+    background: #fff3cd;
+}
+
+.historial-status.cancelada {
+    color: #b00020;
+    background: #fde2e2;
+}
+
+.historial-empty {
+    padding: 32px;
+    text-align: center;
+    color: #5f5f6b;
+}
+
+@media (max-width: 768px) {
+    .historial-container {
+        padding: 32px 16px;
+    }
+
+    .historial-table {
+        font-size: 14px;
+    }
+
+    .historial-table th,
+    .historial-table td {
+        padding: 14px 10px;
+    }
+}
