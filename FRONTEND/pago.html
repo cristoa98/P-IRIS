@@ -44,6 +44,18 @@
       <p class="pago-subtitulo">Ingresa los datos de tu tarjeta para completar la compra.</p>
 
       <form id="form-pago" novalidate>
+        <p class="form-seccion">Datos del comprador</p>
+        <div class="form-group">
+          <label for="pago-nombre-comprador">Nombre completo</label>
+          <input type="text" id="pago-nombre-comprador" placeholder="Tu nombre completo" autocomplete="name">
+          <span class="field-error" id="err-nombre-comprador"></span>
+        </div>
+        <div class="form-group">
+          <label for="pago-correo">Correo electrónico</label>
+          <input type="email" id="pago-correo" placeholder="correo@ejemplo.com" autocomplete="email">
+          <span class="field-error" id="err-correo"></span>
+        </div>
+        <p class="form-seccion">Datos de la tarjeta</p>
         <div class="form-group">
           <label for="pago-nombre">Nombre en la tarjeta</label>
           <input type="text" id="pago-nombre" placeholder="Como aparece en la tarjeta" autocomplete="cc-name">

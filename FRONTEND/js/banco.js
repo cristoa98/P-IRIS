@@ -29,8 +29,28 @@ function mostrarError(campo, msg) {
   if (el) el.textContent = msg;
 }
 
-function validarCampos(nombre, numero, fv, cvv) {
+function validarCampos(nombreComprador, correo, nombre, numero, fv, cvv) {
   let ok = true;
+
+  if (!nombreComprador.trim()) {
+    mostrarError('nombre-comprador', 'El nombre es obligatorio.');
+    ok = false;
+  } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombreComprador.trim())) {
+    mostrarError('nombre-comprador', 'Solo se permiten letras y espacios.');
+    ok = false;
+  } else {
+    mostrarError('nombre-comprador', '');
+  }
+
+  if (!correo.trim()) {
+    mostrarError('correo', 'El correo es obligatorio.');
+    ok = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())) {
+    mostrarError('correo', 'Ingresa un correo válido.');
+    ok = false;
+  } else {
+    mostrarError('correo', '');
+  }
 
   if (!nombre.trim()) {
     mostrarError('nombre', 'El nombre es obligatorio.');
@@ -113,12 +133,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('form-pago').addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const nombreComprador = document.getElementById('pago-nombre-comprador').value;
+    const correo = document.getElementById('pago-correo').value;
     const nombre = document.getElementById('pago-nombre').value;
     const numero = document.getElementById('pago-numero').value;
     const fv = document.getElementById('pago-fv').value;
     const cvv = document.getElementById('pago-cvv').value;
 
-    if (!validarCampos(nombre, numero, fv, cvv)) return;
+    if (!validarCampos(nombreComprador, correo, nombre, numero, fv, cvv)) return;
 
     const btn = document.getElementById('btn-pagar');
     btn.disabled = true;
@@ -133,6 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           carrito: cart,
+          comprador: { nombre: nombreComprador, correo },
           pago: { nombre, numero_tarjeta: numero, fecha_vencimiento: fv, cvv }
         })
       });

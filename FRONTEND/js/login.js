@@ -16,7 +16,7 @@ async function redirectIfLoggedIn() {
         if (user.rol === 'admin') {
         window.location.href = '/admin.html';
         } else {
-        window.location.href = '/historial.html';
+        window.location.href = '/index.html';
         }
     } catch (_) {
         // Sin sesión activa: se mantiene en login.
@@ -45,7 +45,7 @@ form.addEventListener('submit', async (e) => {
     if (user.rol === 'admin') {
         window.location.href = 'admin.html';
     } else {
-        window.location.href = 'historial.html';
+        window.location.href = 'index.html';
         }
     } catch (error) {
         const msg = error.response?.data?.message || 'No se pudo iniciar sesión.';

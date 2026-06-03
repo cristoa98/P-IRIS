@@ -14,10 +14,24 @@ function validarPago(pago) {
   return true;
 }
 
+function validarComprador(comprador) {
+  if (!comprador || typeof comprador !== 'object') return false;
+  const { nombre, correo } = comprador;
+  if (!nombre || !nombre.trim()) return false;
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre.trim())) return false;
+  if (!correo || !correo.trim()) return false;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())) return false;
+  return true;
+}
+
 router.post('/', requireAuth, async (req, res) => {
-  const { carrito, pago } = req.body;
+  const { carrito, pago, comprador } = req.body;
 
   if (!Array.isArray(carrito) || carrito.length === 0) {
+    return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
+  }
+
+  if (!validarComprador(comprador)) {
     return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
   }
 
@@ -29,7 +43,11 @@ router.post('/', requireAuth, async (req, res) => {
     const db = await getDb();
     const usuarioId = req.session.userId;
     const total = carrito.reduce((sum, item) => sum + (item.price || item.precio || 0), 0);
-    const datosFacturacion = JSON.stringify({ nombre: pago.nombre.trim() });
+    const datosFacturacion = JSON.stringify({
+      nombre: comprador.nombre.trim(),
+      correo: comprador.correo.trim(),
+      nombre_tarjeta: pago.nombre.trim()
+    });
 
     db.run(
       'INSERT INTO compras (usuario_id, total, estado, datos_facturacion) VALUES (?, ?, ?, ?)',
