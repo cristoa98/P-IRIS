@@ -1,0 +1,56 @@
+const form = document.getElementById('login-form');
+const alertEl = document.getElementById('login-alert');
+const submitBtn = document.getElementById('login-submit');
+
+function showLoginAlert(message, type = 'error') {
+    alertEl.textContent = message;
+    alertEl.className = `login-alert login-alert-${type}`;
+    alertEl.style.display = 'block';
+}
+
+async function redirectIfLoggedIn() {
+    try {
+    const res = await api.get('/auth/me');
+    if (res.data.user?.rol === 'admin') {
+        window.location.href = '/admin.html';
+    }
+    } catch (_) {
+    // Sin sesión activa: se mantiene en login.
+    }
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    alertEl.style.display = 'none';
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        showLoginAlert('Ingresa correo y contraseña.');
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Ingresando...';
+
+    try {
+        const res = await api.post('/auth/login', { email, password });
+        const user = res.data.user;
+
+        if (user.rol === 'admin') {
+        window.location.href = '/admin.html';
+        } else {
+        showLoginAlert('Acceso denegado. Tu usuario no tiene permisos de administrador.', 'error');
+        await api.post('/auth/logout').catch(() => {});
+        }
+    } catch (error) {
+        const msg = error.response?.data?.message || 'No se pudo iniciar sesión.';
+        showLoginAlert(msg);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Entrar';
+    }
+});
+
+redirectIfLoggedIn();

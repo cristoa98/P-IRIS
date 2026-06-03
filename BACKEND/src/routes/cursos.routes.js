@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getDb, saveDb } = require('../db');
+const { requireRole } = require('../middlewares/auth.middleware');
 
 router.get('/', async (req, res) => {
   try {
