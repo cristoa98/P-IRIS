@@ -27,8 +27,8 @@
 
   <main class="banco-main">
 
-    <!-- Resumen del pedido -->
-    <div class="banco-card resumen-card">
+    <!-- Resumen del pedido (se oculta tras confirmar) -->
+    <div class="banco-card resumen-card" id="panel-resumen">
       <h3>Resumen del pedido</h3>
       <p class="resumen-comercio">Comercio: <strong>P-IRIS</strong></p>
       <ul class="resumen-items" id="resumen-items"></ul>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Formulario de pago -->
-    <div class="banco-card pago-card">
+    <div class="banco-card pago-card" id="panel-pago">
       <h2>Datos de pago</h2>
       <p class="pago-subtitulo">Ingresa los datos de tu tarjeta para completar la compra.</p>
 
@@ -72,14 +72,40 @@
         <div id="pago-mensaje" class="pago-mensaje" style="display:none;"></div>
 
         <button type="submit" class="btn-pagar" id="btn-pagar">Pagar ahora</button>
-
-        <a href="/historial.html" id="link-historial" class="btn-volver" style="display:none;">
-          Ver mi historial de compras →
-        </a>
-        <a href="/index.html" id="link-volver" class="btn-volver">
-          ← Volver al catálogo
-        </a>
+        <a href="/index.html" class="btn-volver">← Volver al catálogo</a>
       </form>
+    </div>
+
+    <!-- Confirmación de compra (visible solo tras pago exitoso) -->
+    <div class="banco-card confirmacion-card" id="panel-confirmacion" style="display:none;">
+      <div class="confirmacion-icono">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h2 class="confirmacion-titulo">Compra realizada con éxito</h2>
+      <p class="confirmacion-subtitulo">Tu pago fue procesado correctamente.</p>
+
+      <div class="confirmacion-detalle">
+        <div class="confirmacion-row">
+          <span class="confirmacion-label">ID de compra</span>
+          <span class="confirmacion-valor" id="conf-id"></span>
+        </div>
+        <div class="confirmacion-row">
+          <span class="confirmacion-label">Fecha</span>
+          <span class="confirmacion-valor" id="conf-fecha"></span>
+        </div>
+        <div class="confirmacion-row confirmacion-row--cursos">
+          <span class="confirmacion-label">Curso(s) adquirido(s)</span>
+          <ul class="confirmacion-cursos" id="conf-cursos"></ul>
+        </div>
+      </div>
+
+      <div class="confirmacion-acciones">
+        <a href="/index.html" class="btn-conf btn-conf--secundario">Volver al catálogo</a>
+        <a href="/historial.html" class="btn-conf btn-conf--primario">Ver historial</a>
+      </div>
     </div>
 
   </main>

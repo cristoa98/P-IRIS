@@ -75,6 +75,18 @@ function validarCampos(nombre, numero, fv, cvv) {
   return ok;
 }
 
+function mostrarConfirmacion(data) {
+  document.getElementById('panel-pago').style.display = 'none';
+  document.getElementById('panel-resumen').style.display = 'none';
+
+  document.getElementById('conf-id').textContent = '#' + data.compraId;
+  document.getElementById('conf-fecha').textContent = new Date(data.fecha).toLocaleString('es-CL');
+  document.getElementById('conf-cursos').innerHTML = data.cursos
+    .map(c => `<li>${c.titulo}</li>`).join('');
+
+  document.getElementById('panel-confirmacion').style.display = 'flex';
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Verificar autenticación
   try {
@@ -128,14 +140,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const data = await res.json();
 
       if (data.ok) {
-        msgEl.textContent = data.mensaje;
-        msgEl.className = 'pago-mensaje pago-mensaje--exito';
-        msgEl.style.display = 'block';
         saveCart([]);
-        btn.textContent = 'Compra completada';
-
-        document.getElementById('link-historial').style.display = 'inline-block';
-        document.getElementById('link-volver').style.display = 'none';
+        mostrarConfirmacion(data);
       } else {
         msgEl.textContent = data.mensaje || 'Pago rechazado';
         msgEl.className = 'pago-mensaje pago-mensaje--error';

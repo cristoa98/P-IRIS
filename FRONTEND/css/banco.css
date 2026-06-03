@@ -252,6 +252,116 @@ body {
   border-top: 1px solid var(--banco-border);
 }
 
+/* Confirmación */
+.confirmacion-card {
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.confirmacion-icono {
+  color: var(--banco-accent);
+  margin-bottom: 1rem;
+}
+
+.confirmacion-titulo {
+  font-size: 1.4rem;
+  color: var(--banco-primary);
+  margin-bottom: 0.3rem;
+}
+
+.confirmacion-subtitulo {
+  font-size: 0.875rem;
+  color: var(--banco-muted);
+  margin-bottom: 1.75rem;
+}
+
+.confirmacion-detalle {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid var(--banco-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.confirmacion-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--banco-border);
+  font-size: 0.875rem;
+}
+
+.confirmacion-row:last-child { border-bottom: none; }
+
+.confirmacion-row--cursos {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.confirmacion-label {
+  color: var(--banco-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+}
+
+.confirmacion-valor {
+  font-weight: 700;
+  color: var(--banco-text);
+}
+
+.confirmacion-cursos {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.confirmacion-cursos li {
+  font-weight: 600;
+  color: var(--banco-text);
+  font-size: 0.875rem;
+}
+
+.confirmacion-acciones {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.btn-conf {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-conf:hover { opacity: 0.85; }
+
+.btn-conf--primario {
+  background: var(--banco-accent);
+  color: #fff;
+}
+
+.btn-conf--secundario {
+  background: transparent;
+  color: var(--banco-primary);
+  border: 2px solid var(--banco-primary);
+}
+
 /* Carrito vacío redirect */
 .banco-redirect {
   text-align: center;

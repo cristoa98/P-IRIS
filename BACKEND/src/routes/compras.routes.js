@@ -46,7 +46,17 @@ router.post('/', requireAuth, async (req, res) => {
     }
 
     saveDb(db);
-    res.json({ ok: true, mensaje: 'Compra realizada exitosamente' });
+
+    const fechaRow = db.exec('SELECT created_at FROM compras WHERE id = ?', [compraId]);
+    const fecha = fechaRow[0]?.values[0][0] || new Date().toISOString();
+
+    res.json({
+      ok: true,
+      mensaje: 'Compra realizada con éxito',
+      compraId,
+      fecha,
+      cursos: carrito.map(item => ({ titulo: item.title || item.titulo }))
+    });
   } catch (err) {
     console.error('Error al registrar compra:', err);
     res.status(500).json({ ok: false, mensaje: 'Pago rechazado' });
