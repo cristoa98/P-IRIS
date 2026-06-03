@@ -1,8 +1,100 @@
+/* ── Layout con sidebar ── */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.admin-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--iris-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  height: 100vh;
+}
+
+.admin-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sidebar-logo {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 0.75rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+.sidebar-item.active {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Select de rol modificado ── */
+.select-rol {
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--iris-gray);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  background: var(--iris-white);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.select-rol:focus { outline: none; border-color: var(--iris-primary); }
+
+.select-modificado {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  font-weight: 700;
+}
+
 /* ── Layout ── */
 .admin-main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem;
+  flex: 1;
+  min-width: 0;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .admin-header {

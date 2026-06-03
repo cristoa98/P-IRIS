@@ -8,17 +8,34 @@
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-  <nav class="navbar-iris">
-    <div class="container">
-      <a href="/" class="logo">P-IRIS</a>
-      <div class="nav-links">
-        <a href="/">Ver Catálogo</a>
-        <a href="/admin.html" class="nav-active">Administración</a>
-      </div>
-    </div>
-  </nav>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">Panel Admin</div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" data-tab="cursos">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Gestión de Cursos
+        </button>
+        <button class="sidebar-item" data-tab="roles">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Gestión de Roles
+        </button>
+      </nav>
+    </aside>
 
+  <div class="admin-right">
+    <nav class="navbar-iris">
+      <div class="container">
+        <a href="/" class="logo">P-IRIS</a>
+        <div class="nav-links">
+          <a href="/">Ver Catálogo</a>
+          <a href="/admin.html" class="nav-active">Administración</a>
+        </div>
+      </div>
+    </nav>
   <main class="admin-main">
+    <!-- ── Sección Cursos ── -->
+    <div id="tab-cursos">
     <div class="admin-header">
       <h1>Gestión de Cursos</h1>
       <button class="btn-primary" id="btn-nuevo-curso">+ Nuevo Curso</button>
@@ -66,7 +83,38 @@
     </div>
 
     <div id="admin-pagination" class="admin-pagination"></div>
+    </div><!-- fin tab-cursos -->
+
+    <!-- ── Sección Roles ── -->
+    <div id="tab-roles" style="display:none;">
+      <div class="admin-header">
+        <h1>Gestión de Roles</h1>
+        <button class="btn-primary" id="btn-guardar-roles">Guardar cambios</button>
+      </div>
+
+      <div id="roles-alert" class="admin-alert" style="display:none;"></div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Perfil</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="roles-tbody">
+            <tr><td colspan="4" class="table-loading">Cargando usuarios...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- fin tab-roles -->
+
   </main>
+  </div><!-- fin admin-right -->
+  </div><!-- fin admin-layout -->
 
   <!-- Modal crear/editar -->
   <div id="modal-form" class="modal" style="display: none;">
@@ -144,5 +192,6 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/api.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/roles.js"></script>
 </body>
 </html>

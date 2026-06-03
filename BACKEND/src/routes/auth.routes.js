@@ -119,6 +119,19 @@ function mapUsuario(row) {
     }
     });
 
+    router.get('/roles', requireAuth, async (req, res) => {
+    try {
+        const db = await getDb();
+        const stmt = db.prepare('SELECT id, nombre FROM roles ORDER BY id ASC');
+        const roles = [];
+        while (stmt.step()) roles.push(stmt.getAsObject());
+        stmt.free();
+        return res.json(roles);
+    } catch (err) {
+        return res.status(500).json({ message: 'Error al obtener roles' });
+    }
+    });
+
     router.post('/logout', requireAuth, (req, res) => {
     req.session.destroy((error) => {
         if (error) {

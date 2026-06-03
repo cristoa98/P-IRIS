@@ -1,3 +1,12 @@
+(async () => {
+  try {
+    const res = await api.get('/auth/me');
+    if (res.data.user?.rol !== 'admin') window.location.replace('/index.html');
+  } catch (_) {
+    window.location.replace('/login.html');
+  }
+})();
+
 const ITEMS_PER_PAGE = 10;
 
 let cursos = [];
