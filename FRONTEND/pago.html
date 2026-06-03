@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Seguro — BancoIRIS</title>
+  <link rel="stylesheet" href="css/banco.css">
+</head>
+<body>
+
+  <header class="banco-header">
+    <div class="banco-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+        <line x1="1" y1="10" x2="23" y2="10"/>
+      </svg>
+      BancoIRIS
+    </div>
+    <div class="banco-secure">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      Conexión segura (simulada)
+    </div>
+  </header>
+
+  <main class="banco-main">
+
+    <!-- Resumen del pedido -->
+    <div class="banco-card resumen-card">
+      <h3>Resumen del pedido</h3>
+      <p class="resumen-comercio">Comercio: <strong>P-IRIS</strong></p>
+      <ul class="resumen-items" id="resumen-items"></ul>
+      <div class="resumen-total">
+        <span>Total</span>
+        <span id="resumen-total"></span>
+      </div>
+    </div>
+
+    <!-- Formulario de pago -->
+    <div class="banco-card pago-card">
+      <h2>Datos de pago</h2>
+      <p class="pago-subtitulo">Ingresa los datos de tu tarjeta para completar la compra.</p>
+
+      <form id="form-pago" novalidate>
+        <div class="form-group">
+          <label for="pago-nombre">Nombre en la tarjeta</label>
+          <input type="text" id="pago-nombre" placeholder="Como aparece en la tarjeta" autocomplete="cc-name">
+          <span class="field-error" id="err-nombre"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="pago-numero">Número de tarjeta</label>
+          <input type="text" id="pago-numero" maxlength="16" placeholder="1234 5678 9012 3456" autocomplete="cc-number">
+          <span class="field-error" id="err-numero"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pago-fv">Vencimiento (AAAA-MM)</label>
+            <input type="text" id="pago-fv" placeholder="2027-05" autocomplete="cc-exp">
+            <span class="field-error" id="err-fv"></span>
+          </div>
+          <div class="form-group form-group--cvv">
+            <label for="pago-cvv">CVV</label>
+            <input type="text" id="pago-cvv" maxlength="3" placeholder="123" autocomplete="cc-csc">
+            <span class="field-error" id="err-cvv"></span>
+          </div>
+        </div>
+
+        <div id="pago-mensaje" class="pago-mensaje" style="display:none;"></div>
+
+        <button type="submit" class="btn-pagar" id="btn-pagar">Pagar ahora</button>
+
+        <a href="/historial.html" id="link-historial" class="btn-volver" style="display:none;">
+          Ver mi historial de compras →
+        </a>
+        <a href="/index.html" id="link-volver" class="btn-volver">
+          ← Volver al catálogo
+        </a>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="banco-footer">
+    BancoIRIS &copy; 2026 — Entorno de pago simulado. No se procesan transacciones reales.
+  </footer>
+
+  <script src="js/banco.js"></script>
+</body>
+</html>

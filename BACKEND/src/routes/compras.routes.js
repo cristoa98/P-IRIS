@@ -1,40 +1,87 @@
 const express = require('express');
 const router = express.Router();
-
-const { getDb } = require('../db');
+const { getDb, saveDb } = require('../db');
 const { requireAuth } = require('../middlewares/auth.middleware');
 
-router.get('/historial', requireAuth, async (req, res) => {
-    try {
-        const db = await getDb();
+function validarPago(pago) {
+  if (!pago || typeof pago !== 'object') return false;
+  const { nombre, numero_tarjeta, fecha_vencimiento, cvv } = pago;
+  if (!nombre || !numero_tarjeta || !fecha_vencimiento || !cvv) return false;
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre.trim())) return false;
+  if (!/^\d{16}$/.test(numero_tarjeta)) return false;
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(fecha_vencimiento)) return false;
+  if (!/^\d{3}$/.test(cvv)) return false;
+  return true;
+}
 
-        const stmt = db.prepare(`
-        SELECT
-            cu.titulo AS nombre_curso,
-            co.created_at AS fecha_compra,
-            co.estado AS estado
-        FROM compras co
-        INNER JOIN detalle_compra dc ON dc.compra_id = co.id
-        INNER JOIN cursos cu ON cu.id = dc.curso_id
-        WHERE co.usuario_id = ?
-        ORDER BY co.created_at DESC
-        `);
+router.post('/', requireAuth, async (req, res) => {
+  const { carrito, pago } = req.body;
 
-        stmt.bind([req.session.userId]);
+  if (!Array.isArray(carrito) || carrito.length === 0) {
+    return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
+  }
 
-        const historial = [];
+  if (!validarPago(pago)) {
+    return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
+  }
 
-        while (stmt.step()) {
-        historial.push(stmt.getAsObject());
-        }
+  try {
+    const db = await getDb();
+    const usuarioId = req.session.userId;
+    const total = carrito.reduce((sum, item) => sum + (item.price || item.precio || 0), 0);
+    const datosFacturacion = JSON.stringify({ nombre: pago.nombre.trim() });
 
-        stmt.free();
+    db.run(
+      'INSERT INTO compras (usuario_id, total, estado, datos_facturacion) VALUES (?, ?, ?, ?)',
+      [usuarioId, total, 'completada', datosFacturacion]
+    );
 
-        return res.json(historial);
-    } catch (error) {
-        console.error('Error al obtener historial:', error);
-        return res.status(500).json({ message: 'Error al obtener historial de compras' });
+    const compraId = db.exec('SELECT last_insert_rowid() AS id')[0].values[0][0];
+
+    for (const item of carrito) {
+      db.run(
+        'INSERT INTO detalle_compra (compra_id, curso_id, precio_unitario) VALUES (?, ?, ?)',
+        [compraId, item.id, item.price || item.precio || 0]
+      );
     }
+
+    saveDb(db);
+    res.json({ ok: true, mensaje: 'Compra realizada exitosamente' });
+  } catch (err) {
+    console.error('Error al registrar compra:', err);
+    res.status(500).json({ ok: false, mensaje: 'Pago rechazado' });
+  }
+});
+
+router.get('/historial', requireAuth, async (req, res) => {
+  try {
+    const db = await getDb();
+
+    const stmt = db.prepare(`
+      SELECT
+        cu.titulo AS nombre_curso,
+        co.created_at AS fecha_compra,
+        co.estado AS estado
+      FROM compras co
+      INNER JOIN detalle_compra dc ON dc.compra_id = co.id
+      INNER JOIN cursos cu ON cu.id = dc.curso_id
+      WHERE co.usuario_id = ?
+      ORDER BY co.created_at DESC
+    `);
+
+    stmt.bind([req.session.userId]);
+
+    const historial = [];
+    while (stmt.step()) {
+      historial.push(stmt.getAsObject());
+    }
+    stmt.free();
+
+    return res.json(historial);
+  } catch (error) {
+    console.error('Error al obtener historial:', error);
+    return res.status(500).json({ message: 'Error al obtener historial de compras' });
+  }
 });
 
 module.exports = router;

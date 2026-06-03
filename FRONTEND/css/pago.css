@@ -1,0 +1,89 @@
+.modal-pago-content {
+  max-width: 480px;
+  width: 100%;
+  padding: 2rem;
+}
+
+.modal-pago-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--iris-dark);
+}
+
+#form-pago .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+#form-pago .form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--iris-text);
+  margin-bottom: 0.3rem;
+}
+
+#form-pago .form-group input {
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid var(--iris-gray);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--iris-dark);
+  transition: var(--transition);
+}
+
+#form-pago .form-group input:focus {
+  outline: none;
+  border-color: var(--iris-primary);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--iris-error);
+  margin-top: 0.2rem;
+  min-height: 1rem;
+}
+
+.pago-mensaje {
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pago-mensaje--exito {
+  background-color: #eaf5d3;
+  color: #4a7c1f;
+  border: 1px solid var(--iris-success);
+}
+
+.pago-mensaje--error {
+  background-color: #fdecea;
+  color: #9b1c1c;
+  border: 1px solid var(--iris-error);
+}
+
+#btn-pagar {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

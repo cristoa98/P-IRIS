@@ -197,6 +197,26 @@
   border-top: 1px solid var(--iris-gray);
 }
 
+.checkout-auth-msg {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff8e1;
+  border: 1px solid #f9a825;
+  border-radius: var(--radius);
+  color: #7b5e00;
+  font-size: 0.82rem;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.checkout-auth-msg a {
+  color: #5c4000;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .btn-checkout {
   width: 100%;
   padding: 0.85rem;
