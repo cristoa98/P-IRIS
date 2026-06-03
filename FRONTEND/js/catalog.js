@@ -188,6 +188,8 @@ async function abrirModal(cursoId) {
     const alreadyInCart = getCart().find(c => c.id === curso.id);
     addBtn.textContent = alreadyInCart ? '✓ En el carrito' : 'Agregar al carrito';
     addBtn.disabled = !!alreadyInCart;
+    const accederBtn = document.getElementById('modal-acceder');
+    accederBtn.dataset.cursoId = curso.id;
   } catch (error) {
     console.error('Error al cargar detalle del curso:', error);
     cerrarModal();
@@ -197,6 +199,28 @@ async function abrirModal(cursoId) {
 function cerrarModal() {
   document.getElementById('modal-curso').style.display = 'none';
   document.body.classList.remove('modal-open');
+}
+
+async function accederContenido(cursoId) {
+  try {
+    const response = await api.get(`/compras/verificar/${cursoId}`);
+    const data = response.data;
+
+    if (!data.comprado) {
+      alert('Debes comprar este curso');
+      return;
+    }
+
+    window.location.href = `contenido.html?id=${cursoId}`;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    console.error('Error al verificar acceso:', error);
+    alert('No se pudo verificar el acceso al curso');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -215,4 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') cerrarModal();
   });
+  const accederBtn = document.getElementById('modal-acceder');
+    if (accederBtn) {
+      accederBtn.addEventListener('click', () => {
+        const cursoId = accederBtn.dataset.cursoId;
+        accederContenido(cursoId);
+      });
+    }
+
 });

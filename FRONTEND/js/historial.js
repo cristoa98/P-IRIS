@@ -18,7 +18,7 @@ async function cargarHistorial() {
         if (!historial.length) {
         tbody.innerHTML = `
             <tr>
-            <td colspan="3">No tienes compras registradas.</td>
+            <td colspan="4">No tienes compras registradas.</td>
             </tr>
         `;
         return;
@@ -29,6 +29,11 @@ async function cargarHistorial() {
             <td>${compra.nombre_curso}</td>
             <td>${formatearFecha(compra.fecha_compra)}</td>
             <td>${compra.estado}</td>
+            <td>
+                <a href="contenido.html?id=${compra.curso_id}" class="btn-primary btn-sm">
+                    Acceder
+                </a>
+            </td>
         </tr>
         `).join('');
 
@@ -36,7 +41,7 @@ async function cargarHistorial() {
         console.error('Error al cargar historial:', error);
         tbody.innerHTML = `
         <tr>
-            <td colspan="3">No se pudo cargar el historial.</td>
+            <td colspan="4">No se pudo cargar el historial.</td>
         </tr>
         `;
     }

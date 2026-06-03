@@ -87,6 +87,7 @@ router.get('/historial', requireAuth, async (req, res) => {
 
     const stmt = db.prepare(`
       SELECT
+        cu.id AS curso_id,
         cu.titulo AS nombre_curso,
         co.created_at AS fecha_compra,
         co.estado AS estado
@@ -109,6 +110,106 @@ router.get('/historial', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Error al obtener historial:', error);
     return res.status(500).json({ message: 'Error al obtener historial de compras' });
+  }
+});
+
+router.get('/verificar/:cursoId', requireAuth, async (req, res) => {
+  try {
+    const db = await getDb();
+    const usuarioId = req.session.userId;
+    const cursoId = Number(req.params.cursoId);
+
+    if (!cursoId) {
+      return res.status(400).json({
+        comprado: false,
+        message: 'Curso inválido'
+      });
+    }
+
+    const stmt = db.prepare(`
+      SELECT COUNT(*) AS total
+      FROM compras co
+      INNER JOIN detalle_compra dc ON dc.compra_id = co.id
+      WHERE co.usuario_id = ?
+        AND dc.curso_id = ?
+        AND co.estado = 'completada'
+    `);
+
+    stmt.bind([usuarioId, cursoId]);
+
+    let total = 0;
+
+    if (stmt.step()) {
+      total = stmt.getAsObject().total;
+    }
+
+    stmt.free();
+
+    return res.json({
+      comprado: total > 0
+    });
+  } catch (error) {
+    console.error('Error al verificar compra:', error);
+    return res.status(500).json({
+      comprado: false,
+      message: 'Error al verificar compra'
+    });
+  }
+});
+
+router.get('/contenido/:cursoId', requireAuth, async (req, res) => {
+  try {
+    const db = await getDb();
+    const usuarioId = req.session.userId;
+    const cursoId = Number(req.params.cursoId);
+
+    if (!cursoId) {
+      return res.status(400).json({
+        message: 'Curso inválido'
+      });
+    }
+
+    const stmt = db.prepare(`
+      SELECT
+        cu.id,
+        cu.titulo,
+        cu.descripcion,
+        cu.imagen_url,
+        cu.video_url,
+        cu.duracion
+      FROM compras co
+      INNER JOIN detalle_compra dc ON dc.compra_id = co.id
+      INNER JOIN cursos cu ON cu.id = dc.curso_id
+      WHERE co.usuario_id = ?
+        AND dc.curso_id = ?
+        AND co.estado = 'completada'
+      LIMIT 1
+    `);
+
+    stmt.bind([usuarioId, cursoId]);
+
+    let curso = null;
+
+    if (stmt.step()) {
+      curso = stmt.getAsObject();
+    }
+
+    stmt.free();
+
+    if (!curso) {
+      return res.status(403).json({
+        message: 'Debes comprar este curso'
+      });
+    }
+
+    return res.json(curso);
+
+  } catch (error) {
+    console.error('Error al obtener contenido:', error);
+
+    return res.status(500).json({
+      message: 'Error al obtener contenido'
+    });
   }
 });
 

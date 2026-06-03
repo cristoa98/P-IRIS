@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contenido del Curso - P-IRIS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/contenido.css">
+</head>
+<body>
+    <nav class="navbar-iris">
+        <div class="container">
+        <a href="/" class="logo">P-IRIS</a>
+        <div class="nav-links">
+            <a href="/">Ver Catálogo</a>
+            <a href="/historial.html">Historial</a>
+        </div>
+        </div>
+    </nav>
+
+    <main class="contenido-container">
+        <section class="contenido-hero">
+        <div>
+            <span class="contenido-badge">Contenido desbloqueado</span>
+
+            <h1 id="contenido-titulo">Contenido del Curso</h1>
+            <p id="contenido-mensaje">Validando acceso...</p>
+            <p id="contenido-descripcion"></p>
+            <p id="contenido-duracion"></p>
+            <div class="contenido-actions">
+            <button id="btn-youtube" class="btn-primary" style="display:none;">▶ Ver clase en YouTube</button>
+            </div>
+
+            <button id="btn-youtube" class="btn-primary" style="display:none;">
+            Ver en YouTube
+            </button>
+        </div>
+
+        <img id="contenido-imagen" src="" alt="Imagen del curso">
+        </section>
+
+        <section class="curso-contenido-card contenido-card">
+        <h2>Material del curso</h2>
+        <p>Acceso autorizado. Aquí se mostrará el contenido del curso comprado.</p>
+
+        <div class="modulo">
+            <h3>Módulo 1: Introducción</h3>
+            <p>Presentación del curso, objetivos principales y metodología de trabajo.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Módulo 2: Desarrollo</h3>
+            <p>Contenido central del curso con ejemplos, imágenes y actividades.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Módulo 3: Aplicación práctica</h3>
+            <p>Ejercicios para aplicar lo aprendido en situaciones reales.</p>
+        </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/contenido.js"></script>
+</body>
+</html>
