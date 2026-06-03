@@ -8,6 +8,13 @@ function showLoginAlert(message, type = 'error') {
     alertEl.style.display = 'block';
 }
 
+function showRegisteredMessage() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('registered') === '1') {
+        showLoginAlert('Registro exitoso. Ahora puedes iniciar sesión.', 'success');
+    }
+}
+
 async function redirectIfLoggedIn() {
     try {
         const res = await api.get('/auth/me');
@@ -57,4 +64,5 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
+showRegisteredMessage();
 redirectIfLoggedIn();

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-IRIS - Registro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+    <nav class="navbar-iris">
+        <div class="container">
+            <a href="/" class="logo">P-IRIS</a>
+            <div class="nav-links">
+                <a href="/">Inicio</a>
+                <a href="/">Cursos</a>
+                <a href="/">Contacto</a>
+                <a href="/registro.html" class="nav-active">Registrarse</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="login-main">
+        <section class="login-card" aria-labelledby="registro-title">
+            <div class="login-header">
+                <span class="login-badge">Crear cuenta</span>
+                <h1 id="registro-title">Registro de usuario</h1>
+                <p>Crea tu cuenta para acceder a las funcionalidades de P-IRIS.</p>
+            </div>
+
+            <div id="registro-alert" class="login-alert" style="display: none;"></div>
+
+            <form class="login-form" id="registro-form" novalidate>
+                <div class="form-group">
+                    <label for="email">Correo electrónico <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="usuario@dominio.com" autocomplete="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña <span class="required">*</span></label>
+                    <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirmación de contraseña <span class="required">*</span></label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Repite tu contraseña" autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="btn-primary login-submit" id="registro-submit">Registrarse</button>
+            </form>
+
+            <div class="login-footer">
+                <p>¿Ya tienes cuenta? <a href="/login.html" class="login-link">Inicia sesión aquí</a></p>
+                <a href="/" class="btn-secondary login-back">Volver al catálogo</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-iris login-footer-page">
+        <p>&copy; 2026 P-IRIS - Plataforma de Cursos. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/registro.js"></script>
+</body>
+</html>

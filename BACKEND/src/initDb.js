@@ -2,6 +2,7 @@ const initSqlJs = require('sql.js');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const { ensureUsuariosNombreNullable } = require('./schema');
 
 const dbPath = path.join(__dirname, 'BD.sqlite');
 
@@ -28,7 +29,7 @@ async function initDatabase() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL,
-      nombre TEXT NOT NULL,
+      nombre TEXT,
       apellido TEXT,
       rol_id INTEGER DEFAULT 2,
       activo INTEGER DEFAULT 1,
@@ -118,6 +119,8 @@ async function initDatabase() {
       FOREIGN KEY (curso_id) REFERENCES cursos(id)
     );
   `);
+
+  ensureUsuariosNombreNullable(db);
 
   const rolesCount = db.exec("SELECT COUNT(*) FROM roles")[0]?.values[0][0] || 0;
   if (rolesCount === 0) {

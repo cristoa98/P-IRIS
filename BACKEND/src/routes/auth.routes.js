@@ -18,6 +18,58 @@ function mapUsuario(row) {
   };
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+router.post('/register', async (req, res) => {
+  try {
+    const { email, password, confirmPassword } = req.body;
+
+    if (!email || !email.trim() || !password || !confirmPassword) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!isValidEmail(normalizedEmail)) {
+      return res.status(400).json({ message: 'El correo debe tener un formato válido' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'La contraseña debe tener mínimo 6 caracteres' });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+    }
+
+    const db = await getDb();
+    const existing = db.exec('SELECT id FROM usuarios WHERE LOWER(email) = ? LIMIT 1', [normalizedEmail]);
+    if (existing[0]?.values?.length) {
+      return res.status(409).json({ message: 'El correo ya está registrado' });
+    }
+
+    const role = db.exec("SELECT id FROM roles WHERE nombre = 'user' LIMIT 1");
+    const userRoleId = role[0]?.values[0]?.[0] || 2;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    db.run(
+      `INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo)
+       VALUES (?, ?, ?, ?, ?, 1)`,
+      [normalizedEmail, hashedPassword, null, null, userRoleId]
+    );
+    saveDb(db);
+
+    return res.status(201).json({
+      message: 'Registro exitoso'
+    });
+  } catch (error) {
+    console.error('Error al registrar usuario:', error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 router.post('/login', async (req, res) => {
   try {
     const { email, password, remember } = req.body;

@@ -1,6 +1,7 @@
 const initSqlJs = require('sql.js');
 const fs = require('fs');
 const path = require('path');
+const { ensureUsuariosNombreNullable } = require('./schema');
 
 let dbInstance = null;
 
@@ -15,6 +16,10 @@ async function getDb() {
     dbInstance = new SQL.Database(buffer);
   } else {
     dbInstance = new SQL.Database();
+  }
+
+  if (ensureUsuariosNombreNullable(dbInstance)) {
+    saveDb(dbInstance);
   }
 
   return dbInstance;
