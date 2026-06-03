@@ -85,6 +85,26 @@ img {
   color: var(--iris-primary);
 }
 
+.auth-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-logout {
+  border: 0;
+  background: transparent;
+  color: var(--iris-text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  padding: 0;
+}
+
+.nav-logout:hover {
+  color: var(--iris-primary);
+}
+
 .hero {
   background: linear-gradient(135deg, var(--iris-primary) 0%, var(--iris-primary-dark) 100%);
   color: var(--iris-white);

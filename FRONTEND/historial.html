@@ -5,26 +5,27 @@
     <title>Historial de Compras - P-IRIS</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/historial.css">
-    </head>
-    <body>
-        <nav class="navbar-iris">
+</head>
+<body>
+    <nav class="navbar-iris">
         <div class="container">
             <a href="/" class="logo">P-IRIS</a>
             <div class="nav-links">
-            <a href="/">Ver Catálogo</a>
-            <a href="/historial.html" class="nav-active">Historial</a>
+                <a href="/">Ver catálogo</a>
+                <a href="/historial.html" class="nav-active">Historial</a>
+                <span data-auth-nav data-auth-current="historial" class="auth-nav"></span>
             </div>
         </div>
-        </nav>
+    </nav>
 
-        <main class="historial-container">
-            <div class="historial-header">
-                <h1>Historial de Compras</h1>
-                <p>Consulta los cursos que has comprado.</p>
-            </div>
+    <main class="historial-container">
+        <div class="historial-header">
+            <h1>Historial de Compras</h1>
+            <p>Consulta los cursos que has comprado.</p>
+        </div>
 
-            <div class="historial-card">
-                <table class="historial-table">
+        <div class="historial-card">
+            <table class="historial-table">
                 <thead>
                     <tr>
                         <th>Curso</th>
@@ -38,10 +39,11 @@
                         <td colspan="4" class="historial-empty">Cargando historial...</td>
                     </tr>
                 </tbody>
-                </table>
-            </div>
-        </main>
+            </table>
+        </div>
+    </main>
 
+    <script src="js/auth.js"></script>
     <script src="js/historial.js"></script>
 </body>
 </html>

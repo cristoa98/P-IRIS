@@ -42,7 +42,28 @@ router.post('/', requireAuth, async (req, res) => {
   try {
     const db = await getDb();
     const usuarioId = req.session.userId;
-    const total = carrito.reduce((sum, item) => sum + (item.price || item.precio || 0), 0);
+    const cursoIds = [...new Set(carrito.map(item => Number(item.id)).filter(Boolean))];
+
+    if (cursoIds.length !== carrito.length) {
+      return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
+    }
+
+    const placeholders = cursoIds.map(() => '?').join(',');
+    const cursosResult = db.exec(
+      `SELECT id, titulo, precio FROM cursos WHERE habilitado = 1 AND id IN (${placeholders})`,
+      cursoIds
+    );
+    const cursos = (cursosResult[0]?.values || []).map(row => ({
+      id: row[0],
+      titulo: row[1],
+      precio: row[2]
+    }));
+
+    if (cursos.length !== cursoIds.length) {
+      return res.status(400).json({ ok: false, mensaje: 'Pago rechazado' });
+    }
+
+    const total = cursos.reduce((sum, curso) => sum + curso.precio, 0);
     const datosFacturacion = JSON.stringify({
       nombre: comprador.nombre.trim(),
       correo: comprador.correo.trim(),
@@ -56,10 +77,10 @@ router.post('/', requireAuth, async (req, res) => {
 
     const compraId = db.exec('SELECT last_insert_rowid() AS id')[0].values[0][0];
 
-    for (const item of carrito) {
+    for (const curso of cursos) {
       db.run(
         'INSERT INTO detalle_compra (compra_id, curso_id, precio_unitario) VALUES (?, ?, ?)',
-        [compraId, item.id, item.price || item.precio || 0]
+        [compraId, curso.id, curso.precio]
       );
     }
 
@@ -73,7 +94,7 @@ router.post('/', requireAuth, async (req, res) => {
       mensaje: 'Compra realizada con éxito',
       compraId,
       fecha,
-      cursos: carrito.map(item => ({ titulo: item.title || item.titulo }))
+      cursos: cursos.map(curso => ({ titulo: curso.titulo }))
     });
   } catch (err) {
     console.error('Error al registrar compra:', err);

@@ -29,6 +29,7 @@ form.addEventListener('submit', async (e) => {
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
 
     if (!email || !password) {
         showLoginAlert('Ingresa correo y contraseña.');
@@ -39,7 +40,7 @@ form.addEventListener('submit', async (e) => {
     submitBtn.textContent = 'Ingresando...';
 
     try {
-        const res = await api.post('/auth/login', { email, password });
+        const res = await api.post('/auth/login', { email, password, remember });
         const user = res.data.user;
 
     if (user.rol === 'admin') {

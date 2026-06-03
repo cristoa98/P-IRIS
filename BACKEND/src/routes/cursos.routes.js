@@ -83,7 +83,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET admin — todos los cursos incluyendo deshabilitados
-router.get('/admin/todos', async (req, res) => {
+router.get('/admin/todos', requireRole(['admin']), async (req, res) => {
   try {
     const db = await getDb();
     const result = db.exec(`
@@ -151,7 +151,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST — crear curso
-router.post('/', async (req, res) => {
+router.post('/', requireRole(['admin']), async (req, res) => {
   try {
     const { titulo, descripcion, precio, video_url, imagen_url, categoria_id, duracion } = req.body;
 
@@ -188,7 +188,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT — editar curso
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireRole(['admin']), async (req, res) => {
   try {
     const { id } = req.params;
     const { titulo, descripcion, precio, video_url, imagen_url, categoria_id, duracion } = req.body;
@@ -229,7 +229,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE — eliminar curso permanentemente
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireRole(['admin']), async (req, res) => {
   try {
     const { id } = req.params;
     const db = await getDb();
@@ -248,7 +248,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PATCH — toggle habilitado
-router.patch('/:id/toggle', async (req, res) => {
+router.patch('/:id/toggle', requireRole(['admin']), async (req, res) => {
   try {
     const { id } = req.params;
     const db = await getDb();

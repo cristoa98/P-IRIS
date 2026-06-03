@@ -1,6 +1,7 @@
 const initSqlJs = require('sql.js');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 
 const dbPath = path.join(__dirname, 'BD.sqlite');
 
@@ -126,12 +127,18 @@ async function initDatabase() {
 
 const adminExists = db.exec("SELECT COUNT(*) FROM usuarios WHERE email = 'admin@p-iris.cl'")[0]?.values[0][0] || 0;
 if (adminExists === 0) {
-  db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('admin@p-iris.cl', 'admin123', 'Administrador', 'P-IRIS', 1, 1)`);
+  db.run(
+    `INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES (?, ?, 'Administrador', 'P-IRIS', 1, 1)`,
+    ['admin@p-iris.cl', bcrypt.hashSync('admin123', 10)]
+  );
 }
 
 const userExists = db.exec("SELECT COUNT(*) FROM usuarios WHERE email = 'usuario@p-iris.cl'")[0]?.values[0][0] || 0;
 if (userExists === 0) {
-  db.run(`INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES ('usuario@p-iris.cl', 'usuario123', 'Usuario', 'Demo', 2, 1)`);
+  db.run(
+    `INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo) VALUES (?, ?, 'Usuario', 'Demo', 2, 1)`,
+    ['usuario@p-iris.cl', bcrypt.hashSync('usuario123', 10)]
+  );
 }
 
   const catsCount = db.exec("SELECT COUNT(*) FROM categorias")[0]?.values[0][0] || 0;
