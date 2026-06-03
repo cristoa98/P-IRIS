@@ -24,9 +24,9 @@ function isValidEmail(email) {
 
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, confirmPassword } = req.body;
+    const { nombre, email, password, confirmPassword } = req.body;
 
-    if (!email || !email.trim() || !password || !confirmPassword) {
+    if (!nombre || !nombre.trim() || !email || !email.trim() || !password || !confirmPassword) {
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
 
@@ -57,7 +57,7 @@ router.post('/register', async (req, res) => {
     db.run(
       `INSERT INTO usuarios (email, password, nombre, apellido, rol_id, activo)
        VALUES (?, ?, ?, ?, ?, 1)`,
-      [normalizedEmail, hashedPassword, null, null, userRoleId]
+      [normalizedEmail, hashedPassword, nombre.trim(), null, userRoleId]
     );
     saveDb(db);
 
