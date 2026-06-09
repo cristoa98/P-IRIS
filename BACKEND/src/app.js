@@ -59,6 +59,9 @@ app.use('/api/compras', comprasRoutes);
 const usuariosRoutes = require('./routes/usuarios.routes');
 app.use('/api/usuarios', usuariosRoutes);
 
+const contactoRoutes = require('./routes/contacto.routes');
+app.use('/api/contacto', contactoRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`P-IRIS Backend running on http://localhost:${PORT}`);

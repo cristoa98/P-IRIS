@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (data.ok) {
         saveCart([]);
         mostrarConfirmacion(data);
+        mostrarNotificacion('Compra realizada con éxito');
       } else {
         msgEl.textContent = data.mensaje || 'Pago rechazado';
         msgEl.className = 'pago-mensaje pago-mensaje--error';

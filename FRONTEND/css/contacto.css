@@ -1,0 +1,67 @@
+.seccion-contacto {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.seccion-contacto h2 {
+  font-size: 1.75rem;
+  color: var(--iris-dark);
+  margin-bottom: 0.5rem;
+}
+
+.seccion-contacto > p {
+  color: var(--iris-text-light);
+  margin-bottom: 1.5rem;
+}
+
+.form-contacto {
+  background: var(--iris-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group-contacto label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--iris-text);
+}
+
+.form-group-contacto input,
+.form-group-contacto textarea {
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--iris-gray);
+  border-radius: var(--radius);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  color: var(--iris-text);
+  transition: var(--transition);
+  resize: vertical;
+}
+
+.form-group-contacto input:focus,
+.form-group-contacto textarea:focus {
+  outline: none;
+  border-color: var(--iris-primary);
+}
+
+.contacto-msg {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+}
+
+.contacto-msg--error {
+  color: var(--iris-error);
+  background: #fdf2f2;
+}

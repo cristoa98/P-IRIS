@@ -26,11 +26,12 @@ registroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     registroAlert.style.display = 'none';
 
+    const nombre = document.getElementById('nombre').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
 
-    if (!email || !password || !confirmPassword) {
+    if (!nombre || !email || !password || !confirmPassword) {
         showRegistroAlert('Todos los campos son obligatorios.');
         return;
     }
@@ -54,7 +55,7 @@ registroForm.addEventListener('submit', async (e) => {
     registroSubmit.textContent = 'Registrando...';
 
     try {
-        await api.post('/auth/register', { email, password, confirmPassword });
+        await api.post('/auth/register', { nombre, email, password, confirmPassword });
         window.location.href = '/login.html?registered=1';
     } catch (error) {
         const msg = error.response?.data?.message || 'No se pudo registrar el usuario.';

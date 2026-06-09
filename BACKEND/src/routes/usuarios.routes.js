@@ -52,6 +52,29 @@ router.patch('/:id/rol', requireRole(['admin']), async (req, res) => {
   }
 });
 
+router.patch('/:id/nombre', requireRole(['admin']), async (req, res) => {
+  const { id } = req.params;
+  const { nombre } = req.body;
+
+  if (!nombre || !nombre.trim()) {
+    return res.status(400).json({ message: 'El nombre es requerido' });
+  }
+
+  try {
+    const db = await getDb();
+    const existe = db.exec('SELECT id FROM usuarios WHERE id = ?', [id]);
+    if (!existe[0]?.values?.length) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    db.run('UPDATE usuarios SET nombre = ? WHERE id = ?', [nombre.trim(), id]);
+    saveDb(db);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error al actualizar nombre:', err);
+    res.status(500).json({ message: 'Error al actualizar nombre' });
+  }
+});
+
 router.delete('/:id', requireRole(['admin']), async (req, res) => {
   const { id } = req.params;
 

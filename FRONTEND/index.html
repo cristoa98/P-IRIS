@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/carrito.css">
   <link rel="stylesheet" href="css/pago.css">
+  <link rel="stylesheet" href="css/contacto.css">
 </head>
 <body>
   <nav class="navbar-iris">
@@ -15,7 +16,7 @@
       <div class="nav-links">
         <a href="/">Inicio</a>
         <a href="/">Cursos</a>
-        <a href="/">Contacto</a>
+        <a href="#contacto">Contacto</a>
         <span data-auth-nav class="auth-nav"><a href="/login.html">Iniciar sesión</a></span>
         <button id="btn-carrito" class="btn-carrito" aria-label="Carrito">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -60,6 +61,27 @@
 
     <div id="pagination" class="pagination"></div>
   </main>
+
+  <section id="contacto" class="seccion-contacto">
+    <h2>Contacto</h2>
+    <p>¿Tienes alguna consulta? Escríbenos y te responderemos a la brevedad.</p>
+    <form id="form-contacto" class="form-contacto" novalidate>
+      <div class="form-group-contacto">
+        <label for="contacto-nombre">Nombre</label>
+        <input type="text" id="contacto-nombre" placeholder="Tu nombre completo" autocomplete="name">
+      </div>
+      <div class="form-group-contacto">
+        <label for="contacto-correo">Correo electrónico</label>
+        <input type="email" id="contacto-correo" placeholder="correo@ejemplo.com" autocomplete="email">
+      </div>
+      <div class="form-group-contacto">
+        <label for="contacto-mensaje">Mensaje</label>
+        <textarea id="contacto-mensaje" rows="4" placeholder="Escribe tu consulta aquí..."></textarea>
+      </div>
+      <div id="contacto-msg" class="contacto-msg" style="display:none;"></div>
+      <button type="submit" id="btn-contacto" class="btn-primary">Enviar mensaje</button>
+    </form>
+  </section>
 
   <footer class="footer-iris">
     <p>&copy; 2026 P-IRIS - Plataforma de Cursos. Todos los derechos reservados.</p>
@@ -109,5 +131,7 @@
   <script src="js/carrito.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/pago.js"></script>
+  <script src="js/notificacion.js"></script>
+  <script src="js/contacto.js"></script>
 </body>
 </html>

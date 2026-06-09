@@ -123,13 +123,15 @@ function renderTabla(pagina, total) {
       </td>
       <td class="td-acciones">
         <button class="btn-table btn-edit" data-id="${c.id}">Editar</button>
-        <button class="btn-table ${c.habilitado ? 'btn-disable' : 'btn-enable'}" data-id="${c.id}">
-          ${c.habilitado ? 'Deshabilitar' : 'Habilitar'}
-        </button>
+
         <button class="btn-table btn-delete" data-id="${c.id}">Eliminar</button>
       </td>
     </tr>
   `).join('');
+  // Agregar este boton arriba para el sprint 3
+        //   <button class="btn-table ${c.habilitado ? 'btn-disable' : 'btn-enable'}" data-id="${c.id}">
+        //   ${c.habilitado ? 'Deshabilitar' : 'Habilitar'}
+        // </button>
 
   tbody.querySelectorAll('.btn-edit').forEach(btn =>
     btn.addEventListener('click', () => abrirEditar(parseInt(btn.dataset.id)))
