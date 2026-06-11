@@ -1,0 +1,82 @@
+body {
+  background: #f7f5fb;
+}
+
+.certificado-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.certificado-diploma {
+  width: 100%;
+  background: #ffffff;
+  border: 10px solid var(--iris-primary);
+  border-radius: 12px;
+  padding: 64px 48px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(31, 24, 54, 0.12);
+}
+
+.certificado-marca {
+  color: var(--iris-primary);
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 24px;
+}
+
+.certificado-titulo {
+  color: var(--iris-text);
+  font-size: 32px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.certificado-texto {
+  color: var(--iris-text-light);
+  font-size: 16px;
+}
+
+.certificado-nombre {
+  display: inline-block;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--iris-primary);
+  margin: 12px 0 24px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--iris-gray);
+}
+
+.certificado-curso {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 12px 0 48px;
+}
+
+.certificado-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--iris-text-light);
+  border-top: 1px solid var(--iris-gray);
+  padding-top: 16px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .certificado-diploma {
+    box-shadow: none;
+    border-width: 6px;
+  }
+}

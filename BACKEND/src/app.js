@@ -42,6 +42,10 @@ app.get('/contenido.html', requireAuth, (req, res) => {
   res.sendFile(path.join(frontendPath, 'contenido.html'));
 });
 
+app.get('/certificado.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(frontendPath, 'certificado.html'));
+});
+
 app.use(express.static(frontendPath));
 
 const cursosRoutes = require('./routes/cursos.routes');
@@ -61,6 +65,9 @@ app.use('/api/usuarios', usuariosRoutes);
 
 const contactoRoutes = require('./routes/contacto.routes');
 app.use('/api/contacto', contactoRoutes);
+
+const certificadosRoutes = require('./routes/certificados.routes');
+app.use('/api/certificados', certificadosRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

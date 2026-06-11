@@ -90,6 +90,17 @@ async function initDatabase() {
       FOREIGN KEY (curso_id) REFERENCES cursos(id)
     );
 
+    CREATE TABLE IF NOT EXISTS progreso_cursos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      usuario_id INTEGER NOT NULL,
+      curso_id INTEGER NOT NULL,
+      completado INTEGER DEFAULT 0,
+      fecha_completado DATETIME,
+      UNIQUE(usuario_id, curso_id),
+      FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+      FOREIGN KEY (curso_id) REFERENCES cursos(id)
+    );
+
     CREATE TABLE IF NOT EXISTS notificaciones (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       usuario_id INTEGER NOT NULL,

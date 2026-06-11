@@ -48,4 +48,35 @@ function ensureUsuariosNombreNullable(db) {
   return true;
 }
 
-module.exports = { ensureUsuariosNombreNullable };
+function ensureCertificadosSchema(db) {
+  const result = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='progreso_cursos'");
+  if (result[0]?.values?.length) return false;
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS certificados (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      usuario_id INTEGER NOT NULL,
+      curso_id INTEGER NOT NULL,
+      codigo TEXT NOT NULL UNIQUE,
+      fecha_emision DATETIME DEFAULT CURRENT_TIMESTAMP,
+      url_descarga TEXT,
+      FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+      FOREIGN KEY (curso_id) REFERENCES cursos(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS progreso_cursos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      usuario_id INTEGER NOT NULL,
+      curso_id INTEGER NOT NULL,
+      completado INTEGER DEFAULT 0,
+      fecha_completado DATETIME,
+      UNIQUE(usuario_id, curso_id),
+      FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+      FOREIGN KEY (curso_id) REFERENCES cursos(id)
+    );
+  `);
+
+  return true;
+}
+
+module.exports = { ensureUsuariosNombreNullable, ensureCertificadosSchema };

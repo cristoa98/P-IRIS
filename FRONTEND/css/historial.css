@@ -79,6 +79,10 @@ body {
     background: #fde2e2;
 }
 
+.certificados-header {
+    margin-top: 48px;
+}
+
 .historial-empty {
     padding: 32px;
     text-align: center;

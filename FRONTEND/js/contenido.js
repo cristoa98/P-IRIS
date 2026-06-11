@@ -12,6 +12,7 @@ async function cargarContenido() {
     try {
         const response = await api.get(`/compras/contenido/${cursoId}`);
         const curso = response.data;
+        let completado = curso.completado === 1;
 
         document.getElementById('contenido-titulo').textContent = curso.titulo;
         document.getElementById('contenido-descripcion').textContent = curso.descripcion;
@@ -38,8 +39,20 @@ async function cargarContenido() {
         if (curso.video_url) {
             youtubeBtn.style.display = 'inline-block';
 
-            youtubeBtn.addEventListener('click', () => {
+            youtubeBtn.addEventListener('click', async () => {
             window.open(curso.video_url, '_blank');
+
+            if (!completado) {
+                completado = true;
+                try {
+                const res = await api.patch(`/compras/contenido/${cursoId}/completar`);
+                if (res.data?.certificado?.nuevo) {
+                    mostrarNotificacion('¡Felicidades, obtuviste tu certificado!');
+                }
+                } catch (_) {
+                completado = false;
+                }
+            }
             });
         } else {
             youtubeBtn.style.display = 'none';

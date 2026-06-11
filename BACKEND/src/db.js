@@ -1,7 +1,7 @@
 const initSqlJs = require('sql.js');
 const fs = require('fs');
 const path = require('path');
-const { ensureUsuariosNombreNullable } = require('./schema');
+const { ensureUsuariosNombreNullable, ensureCertificadosSchema } = require('./schema');
 
 let dbInstance = null;
 
@@ -18,7 +18,9 @@ async function getDb() {
     dbInstance = new SQL.Database();
   }
 
-  if (ensureUsuariosNombreNullable(dbInstance)) {
+  const migrado = ensureUsuariosNombreNullable(dbInstance);
+  const esquemaActualizado = ensureCertificadosSchema(dbInstance);
+  if (migrado || esquemaActualizado) {
     saveDb(dbInstance);
   }
 

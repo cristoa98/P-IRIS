@@ -1,4 +1,5 @@
 const express = require('express');
+const crypto = require('crypto');
 const router = express.Router();
 const { getDb, saveDb } = require('../db');
 const { requireAuth } = require('../middlewares/auth.middleware');
@@ -197,10 +198,12 @@ router.get('/contenido/:cursoId', requireAuth, async (req, res) => {
         cu.descripcion,
         cu.imagen_url,
         cu.video_url,
-        cu.duracion
+        cu.duracion,
+        COALESCE(pc.completado, 0) AS completado
       FROM compras co
       INNER JOIN detalle_compra dc ON dc.compra_id = co.id
       INNER JOIN cursos cu ON cu.id = dc.curso_id
+      LEFT JOIN progreso_cursos pc ON pc.usuario_id = co.usuario_id AND pc.curso_id = cu.id
       WHERE co.usuario_id = ?
         AND dc.curso_id = ?
         AND co.estado = 'completada'
@@ -231,6 +234,69 @@ router.get('/contenido/:cursoId', requireAuth, async (req, res) => {
     return res.status(500).json({
       message: 'Error al obtener contenido'
     });
+  }
+});
+
+router.patch('/contenido/:cursoId/completar', requireAuth, async (req, res) => {
+  try {
+    const usuarioId = req.session.userId;
+    const cursoId = Number(req.params.cursoId);
+
+    if (!cursoId) {
+      return res.status(400).json({ message: 'Curso inválido' });
+    }
+
+    const db = await getDb();
+
+    const stmt = db.prepare(`
+      SELECT COUNT(*) AS total
+      FROM compras co
+      INNER JOIN detalle_compra dc ON dc.compra_id = co.id
+      WHERE co.usuario_id = ?
+        AND dc.curso_id = ?
+        AND co.estado = 'completada'
+    `);
+    stmt.bind([usuarioId, cursoId]);
+
+    let comprado = false;
+    if (stmt.step()) comprado = stmt.getAsObject().total > 0;
+    stmt.free();
+
+    if (!comprado) {
+      return res.status(403).json({ message: 'Debes comprar este curso' });
+    }
+
+    db.run(`
+      INSERT INTO progreso_cursos (usuario_id, curso_id, completado, fecha_completado)
+      VALUES (?, ?, 1, CURRENT_TIMESTAMP)
+      ON CONFLICT(usuario_id, curso_id) DO UPDATE SET completado = 1, fecha_completado = CURRENT_TIMESTAMP
+    `, [usuarioId, cursoId]);
+
+    const certResult = db.exec(
+      'SELECT codigo FROM certificados WHERE usuario_id = ? AND curso_id = ?',
+      [usuarioId, cursoId]
+    );
+
+    let codigo;
+    let nuevo = false;
+
+    if (certResult[0]?.values?.length) {
+      codigo = certResult[0].values[0][0];
+    } else {
+      codigo = crypto.randomUUID();
+      db.run(
+        'INSERT INTO certificados (usuario_id, curso_id, codigo) VALUES (?, ?, ?)',
+        [usuarioId, cursoId, codigo]
+      );
+      nuevo = true;
+    }
+
+    saveDb(db);
+
+    res.json({ completado: true, certificado: { codigo, nuevo } });
+  } catch (error) {
+    console.error('Error al marcar curso como completado:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
 

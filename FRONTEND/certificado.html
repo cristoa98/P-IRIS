@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificado - P-IRIS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/certificado.css">
+</head>
+<body>
+    <nav class="navbar-iris no-print">
+        <div class="container">
+        <a href="/" class="logo">P-IRIS</a>
+        <div class="nav-links">
+            <a href="/">Ver catálogo</a>
+            <a href="/historial.html">Historial</a>
+            <span data-auth-nav data-auth-current="certificado" class="auth-nav"></span>
+        </div>
+        </div>
+    </nav>
+
+    <main class="certificado-container">
+        <div id="certificado" class="certificado-diploma">
+            <p class="certificado-marca">P-IRIS</p>
+            <h1 class="certificado-titulo">Certificado de Finalización</h1>
+            <p class="certificado-texto">Se otorga el presente certificado a</p>
+            <p id="certificado-nombre" class="certificado-nombre">—</p>
+            <p class="certificado-texto">por completar el curso</p>
+            <p id="certificado-curso" class="certificado-curso">—</p>
+            <div class="certificado-footer">
+                <span id="certificado-fecha"></span>
+                <span id="certificado-codigo"></span>
+            </div>
+        </div>
+
+        <div class="certificado-actions no-print">
+            <button id="btn-imprimir" class="btn-primary">Descargar / Imprimir</button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/certificado.js"></script>
+</body>
+</html>
