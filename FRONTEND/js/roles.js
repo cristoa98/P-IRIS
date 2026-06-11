@@ -125,7 +125,9 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
     const target = item.dataset.tab;
     document.getElementById('tab-cursos').style.display = target === 'cursos' ? 'block' : 'none';
     document.getElementById('tab-roles').style.display = target === 'roles' ? 'block' : 'none';
+    document.getElementById('tab-metricas').style.display = target === 'metricas' ? 'block' : 'none';
     if (target === 'roles') cargarUsuarios();
+    if (target === 'metricas') cargarMetricas();
   });
 });
 

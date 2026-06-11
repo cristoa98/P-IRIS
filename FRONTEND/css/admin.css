@@ -217,6 +217,51 @@
   padding: 0 0.25rem;
 }
 
+/* ── Métricas de ventas ── */
+.metricas-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: var(--iris-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.kpi-label {
+  font-size: 0.85rem;
+  color: var(--iris-text-light);
+  font-weight: 500;
+}
+
+.kpi-valor {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--iris-primary);
+}
+
+.barra-metricas {
+  width: 100%;
+  min-width: 120px;
+  height: 10px;
+  background: var(--iris-gray);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.barra-metricas-fill {
+  height: 100%;
+  background: var(--iris-primary);
+  border-radius: 6px;
+}
+
 /* ── Tabla ── */
 .admin-table-wrapper {
   background: var(--iris-white);

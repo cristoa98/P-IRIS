@@ -20,6 +20,10 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           Gestión de Roles
         </button>
+        <button class="sidebar-item" data-tab="metricas">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          Métricas de Ventas
+        </button>
       </nav>
     </aside>
 
@@ -112,6 +116,44 @@
         </table>
       </div>
     </div><!-- fin tab-roles -->
+
+    <!-- ── Sección Métricas de Ventas ── -->
+    <div id="tab-metricas" style="display:none;">
+      <div class="admin-header">
+        <h1>Métricas de Ventas</h1>
+      </div>
+
+      <div class="metricas-kpis">
+        <div class="kpi-card">
+          <span class="kpi-label">Total de ventas</span>
+          <span class="kpi-valor" id="kpi-total-ventas">—</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Compras realizadas</span>
+          <span class="kpi-valor" id="kpi-total-compras">—</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Cursos vendidos</span>
+          <span class="kpi-valor" id="kpi-cursos-vendidos">—</span>
+        </div>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Curso</th>
+              <th>Unidades vendidas</th>
+              <th>Ingresos</th>
+              <th>Distribución</th>
+            </tr>
+          </thead>
+          <tbody id="metricas-tbody">
+            <tr><td colspan="4" class="table-loading">Cargando métricas...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- fin tab-metricas -->
 
   </main>
   </div><!-- fin admin-right -->
@@ -213,5 +255,6 @@
   <script src="js/auth.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/roles.js"></script>
+  <script src="js/metricas.js"></script>
 </body>
 </html>

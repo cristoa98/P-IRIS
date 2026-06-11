@@ -69,6 +69,9 @@ app.use('/api/contacto', contactoRoutes);
 const certificadosRoutes = require('./routes/certificados.routes');
 app.use('/api/certificados', certificadosRoutes);
 
+const metricasRoutes = require('./routes/metricas.routes');
+app.use('/api/metricas', metricasRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`P-IRIS Backend running on http://localhost:${PORT}`);
