@@ -11,7 +11,7 @@ const ITEMS_PER_PAGE = 10;
 
 let cursos = [];
 let currentPage = 1;
-let pendingAction = null; // { type: 'toggle'|'delete', id }
+let pendingAction = null; // { id }
 
 const tbody = document.getElementById('cursos-tbody');
 const paginationEl = document.getElementById('admin-pagination');
@@ -124,23 +124,18 @@ function renderTabla(pagina, total) {
       <td class="td-acciones">
         <button class="btn-table btn-edit" data-id="${c.id}">Editar</button>
 
-        <button class="btn-table btn-delete" data-id="${c.id}">Eliminar</button>
+        <button class="btn-table ${c.habilitado ? 'btn-delete' : 'btn-enable'}" data-id="${c.id}">
+          ${c.habilitado ? 'Eliminar' : 'Restaurar'}
+        </button>
       </td>
     </tr>
   `).join('');
-  // Agregar este boton arriba para el sprint 3
-        //   <button class="btn-table ${c.habilitado ? 'btn-disable' : 'btn-enable'}" data-id="${c.id}">
-        //   ${c.habilitado ? 'Deshabilitar' : 'Habilitar'}
-        // </button>
 
   tbody.querySelectorAll('.btn-edit').forEach(btn =>
     btn.addEventListener('click', () => abrirEditar(parseInt(btn.dataset.id)))
   );
-  tbody.querySelectorAll('.btn-disable, .btn-enable').forEach(btn =>
-    btn.addEventListener('click', () => pedirConfirm('toggle', parseInt(btn.dataset.id)))
-  );
-  tbody.querySelectorAll('.btn-delete').forEach(btn =>
-    btn.addEventListener('click', () => pedirConfirm('delete', parseInt(btn.dataset.id)))
+  tbody.querySelectorAll('.btn-delete, .btn-enable').forEach(btn =>
+    btn.addEventListener('click', () => pedirConfirm(parseInt(btn.dataset.id)))
   );
 }
 
@@ -284,55 +279,39 @@ document.getElementById('curso-form').addEventListener('submit', async (e) => {
   }
 });
 
-// ── Modal confirmación (toggle y delete) ─────────────────────────────────────
+// ── Modal confirmación (eliminar/restaurar) ──────────────────────────────────
 
-function pedirConfirm(tipo, id) {
+function pedirConfirm(id) {
   const curso = cursos.find(c => c.id === id);
   if (!curso) return;
-  pendingAction = { tipo, id };
+  pendingAction = { id };
 
   const modalConfirm = document.getElementById('modal-confirm');
+  const eliminar = curso.habilitado === 1;
 
-  if (tipo === 'delete') {
-    document.getElementById('confirm-titulo').textContent = '¿Eliminar curso?';
-    document.getElementById('confirm-mensaje').textContent =
-      `"${curso.titulo}" será eliminado permanentemente y no podrá recuperarse.`;
-    document.getElementById('confirm-aceptar').className = 'btn-danger';
-    document.getElementById('confirm-aceptar').textContent = 'Eliminar';
-  } else {
-    const deshabilitar = curso.habilitado === 1;
-    document.getElementById('confirm-titulo').textContent =
-      deshabilitar ? '¿Deshabilitar curso?' : '¿Habilitar curso?';
-    document.getElementById('confirm-mensaje').textContent = deshabilitar
-      ? `"${curso.titulo}" dejará de aparecer en el catálogo público.`
-      : `"${curso.titulo}" volverá a aparecer en el catálogo público.`;
-    document.getElementById('confirm-aceptar').className = deshabilitar ? 'btn-danger' : 'btn-primary';
-    document.getElementById('confirm-aceptar').textContent = deshabilitar ? 'Deshabilitar' : 'Habilitar';
-  }
+  document.getElementById('confirm-titulo').textContent =
+    eliminar ? '¿Eliminar curso?' : '¿Restaurar curso?';
+  document.getElementById('confirm-mensaje').textContent = eliminar
+    ? `"${curso.titulo}" se ocultará del catálogo de compra. Podrás restaurarlo cuando quieras.`
+    : `"${curso.titulo}" volverá a estar disponible en el catálogo de compra.`;
+  document.getElementById('confirm-aceptar').className = eliminar ? 'btn-danger' : 'btn-primary';
+  document.getElementById('confirm-aceptar').textContent = eliminar ? 'Eliminar' : 'Restaurar';
 
   modalConfirm.style.display = 'flex';
 }
 
 document.getElementById('confirm-aceptar').addEventListener('click', async () => {
   if (!pendingAction) return;
-  const { tipo, id } = pendingAction;
+  const { id } = pendingAction;
   pendingAction = null;
   document.getElementById('modal-confirm').style.display = 'none';
 
   try {
-    if (tipo === 'delete') {
-      await api.delete(`/cursos/${id}`);
-      showAlert('Curso eliminado correctamente.');
-    } else {
-      const res = await api.patch(`/cursos/${id}/toggle`);
-      showAlert(res.data.message);
-    }
+    const res = await api.patch(`/cursos/${id}/toggle`);
+    showAlert(res.data.message);
     await loadCursos();
   } catch (err) {
-    showAlert(
-      tipo === 'delete' ? 'Error al eliminar el curso.' : 'Error al cambiar el estado del curso.',
-      'error'
-    );
+    showAlert('Error al cambiar el estado del curso.', 'error');
   }
 });
 

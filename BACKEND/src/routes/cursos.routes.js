@@ -228,25 +228,6 @@ router.put('/:id', requireRole(['admin']), async (req, res) => {
   }
 });
 
-// DELETE — eliminar curso permanentemente
-router.delete('/:id', requireRole(['admin']), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const db = await getDb();
-
-    const existing = db.exec('SELECT id FROM cursos WHERE id = ?', [parseInt(id)]);
-    if (!existing[0]?.values?.length) return res.status(404).json({ message: 'Curso no encontrado' });
-
-    db.run('DELETE FROM cursos WHERE id = ?', [parseInt(id)]);
-    saveDb(db);
-
-    res.json({ message: 'Curso eliminado exitosamente' });
-  } catch (error) {
-    console.error('Error al eliminar curso:', error);
-    res.status(500).json({ message: 'Error interno del servidor' });
-  }
-});
-
 // PATCH — toggle habilitado
 router.patch('/:id/toggle', requireRole(['admin']), async (req, res) => {
   try {
@@ -262,7 +243,7 @@ router.patch('/:id/toggle', requireRole(['admin']), async (req, res) => {
     db.run('UPDATE cursos SET habilitado = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [nuevo, parseInt(id)]);
     saveDb(db);
 
-    res.json({ habilitado: nuevo, message: nuevo === 1 ? 'Curso habilitado' : 'Curso deshabilitado' });
+    res.json({ habilitado: nuevo, message: nuevo === 1 ? 'Curso restaurado' : 'Curso eliminado' });
   } catch (error) {
     console.error('Error al cambiar estado del curso:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
